@@ -20,7 +20,6 @@ public class MainMenuAdmin {
         caps.setCapability("unexpectedAlertBehaviour", "dismiss");
         driver = new ChromeDriver(caps);
         System.out.println(((HasCapabilities) driver).getCapabilities());
-        //  driver = new ChromeDriver();
         wait = new WebDriverWait(driver, 10);
     }
 
