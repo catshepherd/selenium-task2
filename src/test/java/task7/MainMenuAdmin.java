@@ -40,10 +40,11 @@ public class MainMenuAdmin {
             if (subSize == 0) {
                 // проверка наличия заголовка с тегом h1
                 verificationH1Enable();
+                continue;
             }
             // проходимся по подменю циклом
             for (int j = 1; j < subSize; j++) {
-                // кликаем по элементу подменю циклом
+                // кликаем по элементу подменю 
                 driver.findElements(By.cssSelector(".docs li")).get(j).click();
                 // проверка наличия заголовка с тегом h1
                 verificationH1Enable();
