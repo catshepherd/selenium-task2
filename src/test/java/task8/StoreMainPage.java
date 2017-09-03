@@ -30,7 +30,7 @@ public class StoreMainPage {
         List<WebElement> listOfDucks = driver.findElements(By.cssSelector("[class*=hover-light]"));
         // проходим циклом и для каждой уточки проверяем количество стикеров
         for (WebElement duck : listOfDucks) {
-            Assert.assertTrue(duck.findElements(By.cssSelector("[class^=sticker]")).size() == 1);
+            Assert.assertTrue(duck.findElements(By.cssSelector(".sticker")).size() == 1);
         }
     }
 
