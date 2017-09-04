@@ -1,14 +1,15 @@
+package Tasks2and3;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
-public class Task2_3 {
+public class Task2_1 {
     private WebDriver driver;
     private WebDriverWait wait;
 
@@ -19,12 +20,8 @@ public class Task2_3 {
     }
     @Test
     public void myFirstTest(){
-        driver.get("http://localhost/litecart/admin");
-        driver.findElement(By.name("username")).sendKeys("admin");
-        driver.findElement(By.name("password")).sendKeys("admin");
-        driver.findElement(By.name("remember_me")).click();
-        driver.findElement(By.name("login")).click();
-        wait.until(titleIs("My Store"));
+        driver.get("https://www.opendrive.com");
+        wait.until(titleIs("OpenDrive | Cloud Storage, Notes, and Task Management"));
     }
 
     @After

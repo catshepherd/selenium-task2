@@ -1,3 +1,5 @@
+package Tasks2and3;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,8 +9,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
-// test commit#3
-public class MyFirstTest {
+
+public class Task2_3 {
     private WebDriver driver;
     private WebDriverWait wait;
 
@@ -17,18 +19,20 @@ public class MyFirstTest {
         driver = new ChromeDriver();
         wait = new WebDriverWait(driver, 10);
     }
-@Test
+    @Test
     public void myFirstTest(){
-        driver.get("http://www.google.com/");
-        driver.findElement(By.name("q")).sendKeys("webdriver");
-        driver.findElement(By.name("btnK")).click();
-        wait.until(titleIs("webdriver - Поиск в Google"));
-}
+        driver.get("http://localhost/litecart/admin");
+        driver.findElement(By.name("username")).sendKeys("admin");
+        driver.findElement(By.name("password")).sendKeys("admin");
+        driver.findElement(By.name("remember_me")).click();
+        driver.findElement(By.name("login")).click();
+        wait.until(titleIs("My Store"));
+    }
 
-@After
+    @After
     public void stop(){
         driver.quit();
         driver = null;
-}
+    }
 }
 
