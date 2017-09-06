@@ -15,7 +15,7 @@ import java.util.List;
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
 public class Countries2 {
-    private WebDriver driver;
+    private static WebDriver driver;
     private WebDriverWait wait;
 
     @Before
@@ -41,46 +41,56 @@ public class Countries2 {
 
     @Test
     public void stateAlphabetVerification() {
-        // список штатов в формате WebElement
-        List<WebElement> stateList = new ArrayList<>();
-        // получаем список всех строк стран в виде строк
-       // List<WebElement> allCountryRows = driver.findElements(By.cssSelector(".row"));
-        // проходим циклом, получаем отдельную строку в виде списка ячеек
-        for (WebElement joinedCountryColumns : allCountryRows) {
-           // List<WebElement> dividedCountryColumns = joinedCountryColumns.findElements(By.tagName("td"));
-            // сравнить что зона страны != 0
-            if (!dividedCountryColumns().get(5).getText().equals("0")) {
-                // переходим на страницу страны
-                stateList.add(joinedCountryColumns.findElement(By.cssSelector("a")));
-
-//                // получаем список всех строк штатов
-//                List<WebElement> allStateRows = driver.findElements(By.cssSelector("#table-zones tr:not(.header)"));
-//                // проходим циклом, получаем отдельную строку в виде списка ячеек
-//                for (WebElement joinedStateColumns : allStateRows) {
-//                    List<WebElement> dividedStateColumns = joinedStateColumns.findElements(By.tagName("td"));
-//                    // ячейка с названием штата отправляется в метод для сравнения
-//                    System.out.println(dividedStateColumns.get(2).getText());
-//                    // countryComparison(dividedStateColumns.get(2).getText());
-//                }
-
-            }
-        }
-        stateList.get(1).click();
-    }
-
-    // метод, который возвращает отдельную строку в виде ячеек td
-    private List<WebElement> dividedCountryColumns() {
-        List<WebElement> dividedCountryColumns = null;
+        // список ссылок стран со штатами в формате WebElement
+        List<WebElement> countryWithStates = new ArrayList<>();
         // получаем список всех строк стран в виде строк
         List<WebElement> allCountryRows = driver.findElements(By.cssSelector(".row"));
-        // проходим циклом, получаем отдельную строку в виде списка ячеек td
+        // проходим циклом, получаем отдельную строку в виде списка ячеек
         for (WebElement joinedCountryColumns : allCountryRows) {
-            dividedCountryColumns = joinedCountryColumns.findElements(By.tagName("td"));
+            List<WebElement> dividedCountryColumns = joinedCountryColumns.findElements(By.tagName("td"));
+
+            // сравнить что зона страны != 0
+            if (!dividedCountryColumns.get(5).getText().equals("0")) {
+                // добавляем страну в список
+                countryWithStates.add(joinedCountryColumns.findElement(By.cssSelector("a")));
+                // PS вот так напрямую почему-то выкидывало исключение:  joinedCountryColumns.findElement(By.cssSelector("a")).click();
+            }
         }
-        return dividedCountryColumns;
+
+
+//        for (WebElement singleCountry : countryWithStates) {
+//            singleCountry.click();
+//            driver.navigate().back();
+//        }
+
+      // список штатов в формате String
+       List<String> allStateString = new ArrayList<>();
+        countryWithStates.get(0).click();
+////                // получаем список всех строк штатов
+        List<WebElement> allStateRows = driver.findElements(By.cssSelector("#table-zones tr:not(.header)"));
+////                // проходим циклом, получаем отдельную строку в виде списка ячеек
+        for (WebElement joinedStateColumns : allStateRows) {
+            List<WebElement> dividedStateColumns = joinedStateColumns.findElements(By.tagName("td"));
+            // ячейка с названием штата отправляется в список
+            allStateString.add(dividedStateColumns.get(2).getText());
+        }
+        countryComparison(allStateString);
     }
 
-    // метод, который сравнивает, что последующая строка лексически больше, чем первая
+        // метод, который возвращает отдельную строку в виде ячеек td
+        private List<WebElement> dividedCountryColumns () {
+            List<WebElement> dividedCountryColumns = null;
+            // получаем список всех строк стран в виде строк
+            List<WebElement> allCountryRows = driver.findElements(By.cssSelector(".row"));
+            // проходим циклом, получаем отдельную строку в виде списка ячеек td
+            for (WebElement joinedCountryColumns : allCountryRows) {
+                dividedCountryColumns = joinedCountryColumns.findElements(By.tagName("td"));
+            }
+            return dividedCountryColumns;
+        }
+
+        // метод, который сравнивает, что последующая строка лексически больше, чем первая
+
     private void countryComparison(List<String> allCountryString) {
         for (int i = 0; i < allCountryString.size() - 1; i++) {
             // если последующая строка лексически больше, чем первая, то выводим текст- предупреждение
@@ -89,11 +99,11 @@ public class Countries2 {
         }
     }
 
-    @After
-    public void stop() {
-        driver.quit();
-        driver = null;
-    }
+//    @After
+//    public void stop() {
+//        driver.quit();
+//        driver = null;
+//    }
 }
 
 
