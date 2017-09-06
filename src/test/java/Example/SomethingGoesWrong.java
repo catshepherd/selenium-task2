@@ -21,6 +21,7 @@ public class SomethingGoesWrong {
         wait = new WebDriverWait(driver, 10);
     }
 
+
     @Test
     public void method1() {
         driver.get("http://localhost/litecart/admin/?app=countries&doc=countries");
@@ -33,7 +34,6 @@ public class SomethingGoesWrong {
     @Test
     public void method2() {
     }
-
     @Test
     public void method3() {
     }
