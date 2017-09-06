@@ -58,6 +58,8 @@ public class Countries2 {
         }
 
 
+        //cells.get(4).findElement(By.tagName("a"))
+
 //        for (WebElement singleCountry : countryWithStates) {
 //            singleCountry.click();
 //            driver.navigate().back();
