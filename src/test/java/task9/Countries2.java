@@ -29,56 +29,58 @@ public class Countries2 {
         wait.until(titleIs("Countries | My Store"));
     }
 
-    @Test
-    public void countryAlphabetVerification() {
-        List<String> countriesString = new ArrayList<>();
-        List<WebElement> allCountryRows = driver.findElements(By.cssSelector(".row a"));
-        for (WebElement singleCountry : allCountryRows)
-            // ячейка с названием страны отправляется в метод для сравнения
-            //  System.out.println(singleCountry.getText());
-            countriesString.add(singleCountry.getText());
-        System.out.println(countriesString);
-      //  countryComparison(countriesString);
-    }
-
 //    @Test
-//    public void stateAlphabetVerification() {
-//        //   loginPage();
-//        // получаем список всех строк стран в виде строк
-//        List<WebElement> allCountryRows = driver.findElements(By.cssSelector(".row"));
-//        // проходим циклом, получаем отдельную строку в виде списка ячеек
-//        for (WebElement joinedCountryColumns : allCountryRows) {
-//            List<WebElement> dividedCountryColumns = joinedCountryColumns.findElements(By.tagName("td"));
-//            // сравнить что зона страны != 0
-//            if (!dividedCountryColumns.get(5).getText().equals("0")) {
-//                // переходим на страницу страны
-//                joinedCountryColumns.findElement(By.cssSelector("a")).click();
-//                // получаем список всех строк штатов
+//    public void countryAlphabetVerification() {
+//        List<String> countriesString = new ArrayList<>();
+//        List<WebElement> allCountryRows = driver.findElements(By.cssSelector(".row a"));
+//        for (WebElement singleCountry : allCountryRows)
+//            // ячейка с названием страны отправляется в метод для сравнения
+//            //  System.out.println(singleCountry.getText());
+//            countriesString.add(singleCountry.getText());
+//        System.out.println(countriesString);
+//      //  countryComparison(countriesString);
+//    }
+
+    @Test
+    public void stateAlphabetVerification() {
+        // получаем список всех строк стран в виде строк
+        List<WebElement> allCountryRows = driver.findElements(By.cssSelector(".row"));
+        // проходим циклом, получаем отдельную строку в виде списка ячеек
+        for (WebElement joinedCountryColumns : allCountryRows) {
+            List<WebElement> dividedCountryColumns = joinedCountryColumns.findElements(By.tagName("td"));
+            // сравнить что зона страны != 0
+            if (!dividedCountryColumns.get(5).getText().equals("0")) {
+                // переходим на страницу страны
+                dividedCountryColumns.get(4).findElement(By.tagName("a")).click();
+                System.out.println("FOUND");
+             driver.navigate().back();
+
+                // получаем список всех строк штатов
 //                List<WebElement> allStateRows = driver.findElements(By.cssSelector("#table-zones tr:not(.header)"));
 //                // проходим циклом, получаем отдельную строку в виде списка ячеек
 //                for (WebElement joinedStateColumns : allStateRows) {
 //                    List<WebElement> dividedStateColumns = joinedStateColumns.findElements(By.tagName("td"));
 //                    // ячейка с названием штата отправляется в метод для сравнения
 //                    System.out.println(dividedStateColumns.get(2).getText());
-//                    // countryComparison(dividedStateColumns.get(2).getText());
+////                    // countryComparison(dividedStateColumns.get(2).getText());
 //                }
-//            }
-//        }
-//    }
-
-    private void countryComparison(List<String> countriesString) {
-        for (int i = 0; i < countriesString.size() - 1; i++) {
-            int x = countriesString.get(i).compareTo(countriesString.get(i + 1));
-               // System.out.println(countriesString.get(i) + " should be swapped with " + countriesString.get(i +
-            System.out.println(x);
+            }
         }
     }
 
-    @After
-    public void stop() {
-        driver.quit();
-        driver = null;
-    }
+        //  cells.get(4).findElement(By.tagName("a"))
+//
+//    private void countryComparison(List<String> countriesString) {
+//        for (int i = 0; i < countriesString.size() - 1; i++) {
+//            int x = countriesString.get(i).compareTo(countriesString.get(i + 1));
+//            // System.out.println(countriesString.get(i) + " should be swapped with " + countriesString.get(i +
+//            System.out.println(x);
+//        }
+//    }
+
+//    @After
+//    public void stop() {
+//        driver.quit();
+//        driver = null;
+//    }
 }
-
-
