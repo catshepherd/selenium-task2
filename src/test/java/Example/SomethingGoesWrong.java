@@ -36,7 +36,7 @@ public class SomethingGoesWrong {
             List<WebElement> dividedCountryColumns = joinedCountryColumns.findElements(By.tagName("td"));
             // сравнить что зона страны != 0
             if (!dividedCountryColumns.get(5).getText().equals("0")) {
-                // переходим на страницу страны и строка ниже выкидывает StaleElementReferenceException
+                // переходим на страницу страны получаем StaleElementReferenceException
                 dividedCountryColumns.get(4).findElement(By.tagName("a")).click();
             }
         }
