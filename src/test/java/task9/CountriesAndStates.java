@@ -46,7 +46,7 @@ public class CountriesAndStates {
     public void stateAlphabetVerification() {
 // получаем к-во строк стран
         int allCountryRowsSize = driver.findElements(By.cssSelector(".row")).size();
-// проходим циклом, получаем отдельную строку в виде списка ячеек
+        // проходим циклом по всем строкам со странами
         for (int i = 0; i < allCountryRowsSize; i++) {
 // получаем список всех стран в виде строк
             List<WebElement> allCountryRows = driver.findElements(By.cssSelector(".row"));
