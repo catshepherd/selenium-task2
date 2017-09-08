@@ -1,5 +1,6 @@
 package task9;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -8,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
@@ -15,6 +17,8 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 public class GeoZones {
     private WebDriver driver;
     private WebDriverWait wait;
+    // создаём список стран штатов в формате String
+    private static List<String> allCountriesString = new ArrayList<>();
 
     @Before
     public void start() {
@@ -23,25 +27,26 @@ public class GeoZones {
     }
 
     @Test
-    public void geoZonesCountry() {
+    public void statesAlphabetVerification() {
         loginPage();
-        List<WebElement> listOfRows = driver.findElements(By.cssSelector(".row"));
-        System.out.println(listOfRows.size());
-       // System.out.println(listOfRows);
-        for (WebElement x: listOfRows){
-            System.out.println(x.getText());}
+        // получаем к-во стран
+        int allCountriesRowsSize = driver.findElements(By.cssSelector(".row td:nth-child(3) a")).size();
+        // проходим циклом по странам
+        for (int i = 0; i < allCountriesRowsSize; i++) {
+            // получаем список всех стран в виде ссылок
+            List<WebElement> allCountries = driver.findElements(By.cssSelector(".row td:nth-child(3) a"));
+            // получаем отдельную ссылку и кликаем
+            allCountries.get(i).click();
+            // получаем список штатов
+            List<WebElement> allStates = driver.findElements(By.cssSelector("tr :not(.header) td:nth-child(3)"));
+            for (WebElement singleState : allStates) {
+                allCountriesString.add(singleState.findElement(By.cssSelector("[selected=selected]")).getText());
+            }
+            // список с названием штатов отправляется в метод для сравнения
+            countryComparison(allCountriesString);
+            driver.navigate().back();
+        }
     }
-
-//    private void countryComparison(String secondCountry) {
-//        // присваиваем переменной значение, которое меньше названия любой страны
-//        String firstCountry = "A";
-//        // если порядок стран верный, то переменной присваиваем новое значение для сравнения со следующей страной
-//        if (firstCountry.compareTo(secondCountry) < 0) firstCountry = secondCountry;
-//        else {
-//            System.out.println(firstCountry + " should be swapped with " + secondCountry);
-//        }
-//        // System.out.println("First country was set " + firstCountry);
-//    }
 
     private void loginPage() {
         driver.get("http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones");
@@ -51,12 +56,23 @@ public class GeoZones {
         wait.until(titleIs("Geo Zones | My Store"));
     }
 
+    // метод сравнивает лексически соседние строки списка, если первая больше последующей, то выводит сообщение
+    private void countryComparison(List<String> countriesString) {
+        for (int i = 0; i < countriesString.size() - 2; i++) {
+            if (countriesString.get(i).compareTo(countriesString.get(i + 1)) > 0) {
+                System.out.println(countriesString.get(i) + " should be swapped with " + countriesString.get(i + 1));
+            }
+        }
+        // очищаем список
+        allCountriesString.clear();
+    }
 
-//    @After
-//    public void stop() {
-//        driver.quit();
-//        driver = null;
-//    }
+    @After
+    public void stop() {
+        driver.quit();
+        driver = null;
+    }
 }
+
 
 
