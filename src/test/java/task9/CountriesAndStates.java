@@ -1,5 +1,3 @@
-
-
 package task9;
 
 import org.junit.After;
@@ -35,17 +33,13 @@ public class CountriesAndStates {
 
     @Test
     public void countryAlphabetVerification() {
-        // получаем к-во строк стран
-        int allCountryRowsSize = driver.findElements(By.cssSelector(".row")).size();
-// проходим циклом, получаем отдельную строку в виде списка ячеек
-        for (int i = 0; i < allCountryRowsSize; i++) {
 // получаем список всех стран в виде строк
-            List<WebElement> allCountryRows = driver.findElements(By.cssSelector(".row"));
-// получаем отдельную строку в виде списка ячеек
-            List<WebElement> dividedCountryColumns = allCountryRows.get(i).findElements(By.tagName("td"));
-// имя страны добавляем в список
-            allCountriesString.add(dividedCountryColumns.get(4).getText());
+        List<WebElement> allCountries = driver.findElements(By.cssSelector(".row td:nth-child(5) a"));
+        for (WebElement singleCountry : allCountries){
+            allCountriesString.add(singleCountry.getText());
         }
+// список с названием штатов отправляется в метод для сравнения
+        countryComparison(allCountriesString);
     }
 
     @Test
@@ -69,23 +63,24 @@ public class CountriesAndStates {
 // проходим циклом, получаем отдельную строку в виде списка ячеек
                 for (WebElement joinedStateColumns : allStateRows) {
                     List<WebElement> dividedStateColumns = joinedStateColumns.findElements(By.tagName("td"));
-                    // добавляем штат в список
+// добавляем штат в список
                     allCountriesString.add(dividedStateColumns.get(2).getText());
                 }
-                // ячейка с названием штата отправляется в метод для сравнения
+// список с названием штатов отправляется в метод для сравнения
                 countryComparison(allCountriesString);
                 driver.navigate().back();
             }
         }
     }
 
+    // метод сравнивает лексически соседние строки списка, если первая больше последующей, то выводит сообщение
     private void countryComparison(List<String> countriesString) {
         for (int i = 0; i < countriesString.size() - 2; i++) {
             if (countriesString.get(i).compareTo(countriesString.get(i + 1)) > 0) {
                 System.out.println(countriesString.get(i) + " should be swapped with " + countriesString.get(i + 1));
             }
         }
-        // очищаем список
+// очищаем список
         allCountriesString.clear();
     }
 
@@ -95,4 +90,3 @@ public class CountriesAndStates {
         driver = null;
     }
 }
-
