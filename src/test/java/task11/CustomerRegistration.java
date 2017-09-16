@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -19,8 +18,7 @@ public class CustomerRegistration {
 
     @Before
     public void start() {
-        //  driver = new ChromeDriver();
-        driver = new FirefoxDriver();
+        driver = new ChromeDriver();
         wait = new WebDriverWait(driver, 10);
         driver.get("http://localhost/litecart/en/create_account");
         wait.until(titleIs("Create Account | My Store"));
