@@ -77,10 +77,10 @@ public class AddGoods {
         // переход на Information таб
         WebElement informationTab = driver.findElement(By.cssSelector("#content li:nth-child(2) > a"));
         informationTab.click();
-        // не уверен, что ожидание работает. Без него код не падал ни разу.
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("[name=manufacturer_id]"))));
 
         WebElement manufacturer = driver.findElement(By.cssSelector("[name=manufacturer_id]"));
+        // не уверен, что ожидание работает. Без него код не падал ни разу.
+        wait.until(ExpectedConditions.visibilityOf(manufacturer));
         manufacturer.sendKeys("a");
 
         WebElement keywords = driver.findElement(By.cssSelector("[name=keywords]"));
@@ -109,9 +109,8 @@ public class AddGoods {
         WebElement prices = driver.findElement(By.cssSelector("#content li:nth-child(4) > a"));
         prices.click();
 
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("[name=purchase_price]"))));
-
         WebElement purchasePrice = driver.findElement(By.cssSelector("[name=purchase_price]"));
+        wait.until(ExpectedConditions.visibilityOf(purchasePrice));
         purchasePrice.clear();
         purchasePrice.sendKeys("1.22");
 
