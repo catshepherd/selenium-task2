@@ -54,17 +54,20 @@ public class AddRemoveGoods {
         cart.click();
 
 
-        // строка в таблице как WebElement списка
+         // строка в таблице как WebElement списка
         List<WebElement> orderTable = driver.findElements(By.cssSelector("#order_confirmation-wrapper tr"));
-		// количество строчек в таблице
-		int totalQuantityOfRows = orderTable.size();
-		// количество строчек заказа =  количество строчек в таблице - 5
+        // количество строчек в таблице
+        int totalQuantityOfRows = orderTable.size();
+        System.out.println(totalQuantityOfRows);
+        // количество строчек заказа =  количество строчек в таблице - 5
         int orderQuantityOfRows = orderTable.size() - 5;
 
         for (int i = 0; i <= orderQuantityOfRows; i++) {
             WebElement removeButton = driver.findElement(By.cssSelector("[name=remove_cart_item]"));
             removeButton.click();
-		// подождать пока количество строчек в таблице станет меньше на 1
+            // подождать пока количество строчек в таблице станет меньше на 1
+            // вот здесь часто падает с ошибкой Expected condition failed: waiting for number to be "6". Current number: "0"
+            // то есть By.cssSelector("#order_confirmation-wrapper tr") == 0 почему-то
             wait.until(ExpectedConditions.numberOfElementsToBe(By.cssSelector("#order_confirmation-wrapper tr"), totalQuantityOfRows--));
         }
     }
