@@ -62,7 +62,7 @@ public class AddRemoveGoods {
         // количество строчек заказа =  количество строчек в таблице - 5
         int orderQuantityOfRows = orderTable.size() - 5;
 
-        for (int i = 0; i <= orderQuantityOfRows; i++) {
+        for (int i = 0; i < orderQuantityOfRows; i++) {
             WebElement removeButton = driver.findElement(By.cssSelector("[name=remove_cart_item]"));
             removeButton.click();
             // подождать пока количество строчек в таблице станет меньше на 1
