@@ -8,6 +8,6 @@
         for (int i = 0; i <= orderQuantityOfRows; i++) {
             WebElement removeButton = driver.findElement(By.cssSelector("[name=remove_cart_item]"));
             removeButton.click();
-		// подождать пока количество строчек в таблице не будет меньше на 1
+		// подождать пока количество строчек в таблице станет меньше на 1
             wait.until(ExpectedConditions.numberOfElementsToBe(By.cssSelector("#order_confirmation-wrapper tr"), totalQuantityOfRows--));
         }
