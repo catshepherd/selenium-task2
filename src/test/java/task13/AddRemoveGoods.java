@@ -1,4 +1,4 @@
-		// строка в таблице как WebElement списка
+// строка в таблице как WebElement списка
         List<WebElement> orderTable = driver.findElements(By.cssSelector("#order_confirmation-wrapper tr"));
 		// количество строчек в таблице
 		int totalQuantityOfRows = orderTable.size();
@@ -10,3 +10,4 @@
             removeButton.click();
 		// подождать пока количество строчек в таблице не будет меньше на 1
             wait.until(ExpectedConditions.numberOfElementsToBe(By.cssSelector("#order_confirmation-wrapper tr"), totalQuantityOfRows--));
+        }
