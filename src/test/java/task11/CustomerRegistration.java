@@ -44,7 +44,9 @@ public class CustomerRegistration {
         WebElement zoneCode = driver.findElement(By.cssSelector("select[name=zone_code]"));
         zoneCode.sendKeys("Washington");
         WebElement email = driver.findElement(By.cssSelector("[name=email]"));
-        email.sendKeys("not_sugar10@mail.ru");
+         // генерируем уникальный имейл
+        String unicEmail = getEmail();
+        email.sendKeys(unicEmail);
         WebElement phone = driver.findElement(By.cssSelector("[name=phone]"));
         phone.sendKeys("+14252660411");
         WebElement password = driver.findElement(By.cssSelector("[name=password]"));
@@ -58,7 +60,7 @@ public class CustomerRegistration {
         logOut.click();
         // вход в аккаунт
         WebElement email1 = driver.findElement(By.cssSelector("[name=email]"));
-        email1.sendKeys("not_sugar10@mail.ru");
+        email1.sendKeys(unicEmail);
         WebElement password1 = driver.findElement(By.cssSelector("[name=password]"));
         password1.sendKeys("Qwerty!123");
         WebElement login = driver.findElement(By.cssSelector("[name=login]"));
@@ -70,6 +72,18 @@ public class CustomerRegistration {
 
     private String logOut() {
         return "#box-account [class=list-vertical] li:nth-child(4) a";
+    }
+    
+      // разные имейлы
+    private String getEmail() {
+        String emailName = "not_sugar";
+        String domainName = "@mail.ru";
+        String email;
+
+        Date date = new Date();
+        long millis = date.getTime();
+        email = emailName + millis + domainName;
+        return email;
     }
 
     @After
