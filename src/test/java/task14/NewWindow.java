@@ -45,7 +45,7 @@ public class NewWindow {
             wait.until(numberOfWindowsToBe(2));
             // сет окон
             Set<String> setWindows = driver.getWindowHandles();
-            // находим итератором нужное окно
+            // находим итератором нужное окно и переходим на него
             for (Iterator<String> it = setWindows.iterator(); it.hasNext(); ) {
                 String newWindow = it.next();
                 if (!newWindow.equals(mainWindow)) driver.switchTo().window(newWindow);
