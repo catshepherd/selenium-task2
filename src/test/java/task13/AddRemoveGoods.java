@@ -1,4 +1,3 @@
-
 package task13;
 
 import org.junit.After;
@@ -35,7 +34,7 @@ public class AddRemoveGoods {
             WebElement firstDuck = driver.findElement(By.cssSelector("#box-most-popular li:first-child"));
             firstDuck.click();
 
-            // есть ли на странице Size Select
+// есть ли на странице Size Select
             List<WebElement> sizeSelect = driver.findElements(By.cssSelector("[name^=options]"));
             if (sizeSelect.size() > 0) {
                 sizeSelect.get(0).sendKeys("s");
@@ -43,32 +42,35 @@ public class AddRemoveGoods {
 
             WebElement addToCartButton = driver.findElement(By.cssSelector("[name=add_cart_product]"));
             addToCartButton.click();
-            // подождать, пока счётчик товаров в корзине увеличится на единицу
+// подождать, пока счётчик товаров в корзине увеличится на единицу
             wait.until(ExpectedConditions.attributeContains
                     (driver.findElement(By.cssSelector("span.quantity")), "textContent", Integer.toString(i)));
             driver.navigate().back();
         }
 
-        // переход в корзину
+// переход в корзину
         WebElement cart = driver.findElement(By.cssSelector("#cart a.link"));
         cart.click();
 
 
-         // строка в таблице как WebElement списка
+// строка в таблице как WebElement списка
         List<WebElement> orderTable = driver.findElements(By.cssSelector("#order_confirmation-wrapper tr"));
-        // количество строчек в таблице
-        int totalQuantityOfRows = orderTable.size();
-        System.out.println(totalQuantityOfRows);
-        // количество строчек заказа =  количество строчек в таблице - 5
+// количество строчек заказа =  количество строчек в таблице - 5
         int orderQuantityOfRows = orderTable.size() - 5;
 
         for (int i = 0; i < orderQuantityOfRows; i++) {
+            WebElement boxCheckoutCart = driver.findElement(By.cssSelector("#box-checkout-cart"));
+            // список из маленьких картинок. Может быть длиной 3, 2 или 0.
+            List<WebElement> cheat = boxCheckoutCart.findElements(By.cssSelector(".inact, .act"));
+            if (cheat.size() > 0) {
+                boxCheckoutCart.findElement(By.cssSelector("li:first-child > a")).click();
+            }
+
+            // находим кнопку удаления и кликаем
             WebElement removeButton = driver.findElement(By.cssSelector("[name=remove_cart_item]"));
             removeButton.click();
-            // подождать пока количество строчек в таблице станет меньше на 1
-            // вот здесь часто падает с ошибкой Expected condition failed: waiting for number to be "6". Current number: "0"
-            // то есть By.cssSelector("#order_confirmation-wrapper tr") == 0 почему-то
-            wait.until(ExpectedConditions.numberOfElementsToBe(By.cssSelector("#order_confirmation-wrapper tr"), totalQuantityOfRows--));
+            // ждём пока малекькая картинка исчезнет, если она есть
+            if (cheat.size() > 0) wait.until(ExpectedConditions.stalenessOf(cheat.get(0)));
         }
     }
 
@@ -77,16 +79,9 @@ public class AddRemoveGoods {
         wait.until(titleIs("Online Store | My Store"));
     }
 
-
-//    @After
-//    public void stop() {
-//        driver.quit();
-//        driver = null;
-//    }
+    @After
+    public void stop() {
+        driver.quit();
+        driver = null;
+    }
 }
-
-
-
-
-
-        
