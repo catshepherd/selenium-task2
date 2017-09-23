@@ -46,3 +46,13 @@ public class CartPage extends Page {
             smallPicture.click();
         }
     }
+
+    // удаляем товар
+    public void removeItem() {
+        removeButton.click();
+        // ждём пока маленькая картинка исчезнет, если она есть
+        if (smallPicturesList.size() > 0) {
+            wait.until(ExpectedConditions.stalenessOf(smallPicturesList.get(0)));
+        }
+    }
+}
